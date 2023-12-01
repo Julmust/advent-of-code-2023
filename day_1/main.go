@@ -26,7 +26,6 @@ func parseInput(data []string) []int {
 
 func second(data []string) []int {
 	var output []int
-	all_strings := [...]string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 	string_to_val := map[string]string{
 		"one":   "1",
 		"two":   "2",
@@ -45,10 +44,10 @@ func second(data []string) []int {
 			if char <= 57 && char >= 48 { // filter on ascii value for digits
 				tmp = append(tmp, string(line[idx]))
 			} else {
-				for _, letter_no := range all_strings {
-					if len(line[idx:]) >= len(letter_no) { // Checking that there's enough characters left for this case
-						if line[idx:idx+len(letter_no)] == letter_no {
-							tmp = append(tmp, string_to_val[letter_no])
+				for key := range string_to_val {
+					if len(line[idx:]) >= len(key) { // Checking that there's enough characters left for this case
+						if line[idx:idx+len(key)] == key {
+							tmp = append(tmp, string_to_val[key])
 						}
 					}
 				}
