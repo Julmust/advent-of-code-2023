@@ -59,6 +59,8 @@ func (fg *full_game) maxColorCount() [3]int {
 }
 
 func parseGames(line string) full_game {
+	// Could/should be done with fmt.Sscanf!
+
 	// Separate game id from game data
 	split_one := strings.Split(line, ": ") // [ "game x" games.. ]
 
