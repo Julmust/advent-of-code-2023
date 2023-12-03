@@ -121,41 +121,6 @@ func getNumberCoordinates(data [][]string) [][]coord {
 		}
 	}
 
-	// Trim the output array to only contain the stop and start values
-	// of the integers
-	for idx, oval := range coords_slice {
-		coords_slice[idx] = []coord{oval[0], oval[len(oval)-1]}
-	}
-
-	return coords_slice
-}
-
-func getNumberCoordinatesTwo(data [][]string) [][]coord {
-	var coords_slice [][]coord
-
-	for idx, val := range data { // Gives []string
-		var tmp_co []coord
-		for sidx, sval := range val {
-			_, err := strconv.Atoi(sval) // Trying to cast from string to int
-			if err == nil {              // If the cast succeeded, we know the value is an integer
-				tmp_co = append(tmp_co, coord{x: idx, y: sidx, val: sval})
-			} else {
-				// If the cast failed, and we have values in our "cache"
-				// we flush those to the main 2d array and clear the cache.
-				if len(tmp_co) > 0 {
-					coords_slice = append(coords_slice, tmp_co)
-					tmp_co = []coord{}
-				}
-			}
-			if sidx == len(val)-1 {
-				if len(tmp_co) > 0 {
-					coords_slice = append(coords_slice, tmp_co)
-					tmp_co = []coord{}
-				}
-			}
-		}
-	}
-
 	return coords_slice
 }
 
@@ -233,6 +198,13 @@ func checkSurrounding(gears_coordinates []coord, parts_coordinates [][]coord) in
 func one(data []string) {
 	parsed_data := parse(data)
 	coordinates := getNumberCoordinates(parsed_data)
+
+	// Trim the output array to only contain the stop and start values
+	// of the integers
+	for idx, oval := range coordinates {
+		coordinates[idx] = []coord{oval[0], oval[len(oval)-1]}
+	}
+
 	parts := checkIfPart(coordinates, parsed_data)
 	var res int
 	for _, i := range parts {
@@ -244,7 +216,8 @@ func one(data []string) {
 func two(data []string) {
 	parsed_data := parse(data)
 	gears_co := getCoordinatesForGear(parsed_data)
-	coordinates := getNumberCoordinatesTwo(parsed_data)
+	coordinates := getNumberCoordinates(parsed_data)
+	// coordinates := getNumberCoordinatesTwo(parsed_data)
 	res := checkSurrounding(gears_co, coordinates)
 	fmt.Printf("Result 2: %v\n", res)
 }
