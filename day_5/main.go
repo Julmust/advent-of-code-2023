@@ -90,6 +90,47 @@ func getLocations(seeds []int, maps map[string][][]int) []int {
 	return locs
 }
 
+func getLocationsTwo(seedStart, seedStop int, maps map[string][][]int) int {
+	// var locs []int
+	var low int
+	order := []string{
+		"seed-to-soil",
+		"soil-to-fertilizer",
+		"fertilizer-to-water",
+		"water-to-light",
+		"light-to-temperature",
+		"temperature-to-humidity",
+		"humidity-to-location",
+	}
+
+	stopAt := seedStart + seedStop
+
+	for startAt := seedStart; startAt < stopAt; startAt++ {
+		seed := startAt
+		for _, o := range order {
+			seed = calcNextSeed(seed, o, maps)
+		}
+
+		if low == 0 || seed < low {
+			low = seed
+			fmt.Println(low)
+		}
+	}
+
+	fmt.Println("returning")
+	return low
+}
+
+func getLow(nums []int) int {
+	var low int
+	for _, i := range nums {
+		if low == 0 || i < low {
+			low = i
+		}
+	}
+	return low
+}
+
 func one(data []string) {
 	seeds := parseSeeds(data[0]) // Seeds is always on the first line
 	// key: [[dst_range_start, src_range_start, range_len], ...]
@@ -106,9 +147,39 @@ func one(data []string) {
 	fmt.Printf("Solution 1: %d\n", low)
 }
 
+// SLOW AS A MOTHERFUCKER BUT IT RUNS
+// There's supposedly a fancy way of doing this but I have no clue how so bruteforce it is
+func two(data []string) {
+	seeds := parseSeeds(data[0])
+	maps := parseRawToMaps(data[1:])
+
+	var actualSeeds [][]int
+	for {
+		if len(seeds) == 0 {
+			break
+		}
+		actualSeeds = append(actualSeeds, seeds[:2])
+		seeds = seeds[2:]
+	}
+
+	var res []int
+	for _, i := range actualSeeds {
+		res = append(res, getLocationsTwo(i[0], i[1], maps))
+	}
+
+	var low int
+	for _, i := range res {
+		if low == 0 || i < low {
+			low = i
+		}
+	}
+	fmt.Printf("Solution 2: %d\n", low)
+}
+
 func main() {
 	// data := readinput.ReadText("example.txt")
 	data := readinput.ReadText("input.txt")
 
 	one(data)
+	two(data)
 }
