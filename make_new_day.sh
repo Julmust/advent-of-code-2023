@@ -10,6 +10,8 @@ fi
 
 mkdir ./day_$dn
 ( cd ./day_$dn ; \
+    touch example.txt
+    touch input.txt
     go mod init aoc_2023/day_$dn ; \
     go work use . ; \
     echo -e "package main\n\n\nfunc main() {\n}" >> main.go )
