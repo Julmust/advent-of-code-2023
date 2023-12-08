@@ -1,0 +1,4 @@
+github.com/Julmust/merge-sort v0.0.0-20231121092012-b8e6690f9399 h1:lAwh+sEyJY9cxQ+AyEylSY58t45D9lefIbJtJpC7g9E=
+github.com/Julmust/merge-sort v0.0.0-20231121092012-b8e6690f9399/go.mod h1:TjExbflymvTfz0NABtoMUv2wby9XTAzHsFdOKU4qiPE=
+github.com/vehsamrak/merge-sort v1.0.1 h1:SlKKv/rsgFN9mTWOM+UoHuKfeN4RBjywCFOPdb7KFMg=
+github.com/vehsamrak/merge-sort v1.0.1/go.mod h1:V5HzqEM+uWhsftY9XoFn45Nemodv801TfY/XI+8mOu8=
